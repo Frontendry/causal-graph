@@ -10,7 +10,7 @@
 import { useCanvasContext } from "../../../context/canvasContextStore";
 
 const Canvas = () => {
-  // Get canvasRef and reference the canvas HTML Element
+  // Get canvasRef and reference the canvas HTML Element below
   const { canvasRef } = useCanvasContext();
 
   return <section id="canvas" className="w-4/5" ref={canvasRef}></section>;
