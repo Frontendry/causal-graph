@@ -46,11 +46,11 @@ const AddCommentBtn = () => {
 
       // Context Menu Width and Height
       const contextMenuDim = {
-        width: 100,
-        height: 100,
+        width: 70,
+        height: 80,
       };
 
-      const offset = 4; // context menu touching space
+      const offset = 10; // context menu space from svg element
 
       // Dimensions to translate context menu
       const contextMenuXPosition =
@@ -58,11 +58,29 @@ const AddCommentBtn = () => {
 
       const contextMenuGroup = parentTextGroup.group();
       contextMenuGroup.attr("class", "context-menu");
-      contextMenuGroup.translate(contextMenuXPosition);
+      contextMenuGroup.translate(contextMenuXPosition, -20);
 
       contextMenuGroup
         .rect(contextMenuDim.width, contextMenuDim.height)
-        .fill("#f09");
+        .fill("#64748b");
+
+      contextMenuGroup
+        .text(function (add) {
+          add
+            .tspan("Edit Text")
+            .attr("class", "editText cursor-pointer")
+            .newLine();
+          add
+            .tspan("Delete")
+            .attr("class", "deleteItem cursor-pointer")
+            .newLine();
+        })
+        .font({
+          fill: "#fff",
+          size: 12,
+        })
+        .leading(1.8)
+        .dmove(8, 20);
 
       parentTextGroup.draggable();
 
