@@ -27,17 +27,42 @@ const AddCommentBtn = () => {
     if (commentBox && commentBox.value !== "") {
       const textSvgId = nextId();
 
-      const parentTextGroup = svgFn.group();
+      // Add SVG Group with unique ID to main SVG 'Canvas'
+      const parentTextGroup = svgFn.group().attr({
+        id: `svgText${textSvgId}`,
+      });
 
-      parentTextGroup.attr("id", `svgText${textSvgId}`);
+      // Add Text to the created group
+      parentTextGroup.text(commentBox.value).font({
+        fill: "#000",
+        anchor: "middle",
+      });
 
-      parentTextGroup
-        .text(commentBox.value)
-        .font({
-          fill: "#000",
-          anchor: "middle",
-        })
-        .move(20, 20);
+      // Move it from the left edges
+      parentTextGroup.translate(120, 20);
+
+      // Get width for the created group above
+      const parentTextGroupWidth = parentTextGroup.width();
+
+      // Context Menu Width and Height
+      const contextMenuDim = {
+        width: 100,
+        height: 100,
+      };
+
+      const offset = 4; // context menu touching space
+
+      // Dimensions to translate context menu
+      const contextMenuXPosition =
+        -contextMenuDim.width - parentTextGroupWidth / 2 - offset;
+
+      const contextMenuGroup = parentTextGroup.group();
+      contextMenuGroup.attr("class", "context-menu");
+      contextMenuGroup.translate(contextMenuXPosition);
+
+      contextMenuGroup
+        .rect(contextMenuDim.width, contextMenuDim.height)
+        .fill("#f09");
 
       parentTextGroup.draggable();
 
