@@ -18,8 +18,6 @@ import DownArrow from "./downArrow";
 const EdgesContainer = () => {
   return (
     <div>
-      <h2 className="text-sky-500 mb-8 font-bold">Tool Box</h2>
-
       <ToolsSectionTitles titleText="Edges (Arrows)" />
 
       <div className="grid grid-cols-3 gap-1.5">
