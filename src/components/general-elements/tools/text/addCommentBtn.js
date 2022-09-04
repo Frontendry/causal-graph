@@ -41,17 +41,12 @@ const AddCommentBtn = () => {
     // console.log(svgFn);
 
     if (commentBox && commentBox.value !== "") {
-      if (editing === false) {
-        console.log("editing false");
-        // Initialize Unique IDs
-        const textSvgId = nextId();
+      // Initialize Unique IDs
+      const textSvgId = nextId();
 
+      if (editing === false) {
         setSvgFn((current) => {
           //const currentDup = current;
-
-          /*  if (current.node.instance.findOne(`#svgText${textSvgId}`) > 0) {
-            return;
-          } */
 
           // current.node.instance.findOne(`#svgText${textSvgId}`).remove();
 
@@ -62,6 +57,14 @@ const AddCommentBtn = () => {
             id: `svgText${textSvgId}`,
             class: "causal-graph-component",
           });
+
+          const groupList = current.node.instance.find(`#svgText${textSvgId}`);
+
+          if (groupList.length > 1) {
+            const lastEl = groupList[groupList.length - 1];
+            console.log(lastEl);
+            lastEl.remove();
+          }
 
           // Add Text to the created group
           const addedText = parentTextGroup
