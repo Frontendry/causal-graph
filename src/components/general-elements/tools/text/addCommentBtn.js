@@ -16,9 +16,8 @@ const AddCommentBtn = () => {
   // Component Level States
   const [commentBox, setCommentBox] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [currentEditableTextCont, setCurrentEditableTextCont] = useState(null);
-  const [parentGroupEl, setParentGroupEl] = useState(null);
-  const [parentGroupSet, setParentGroupSet] = useState(false);
+  /*   const [parentGroupEl, setParentGroupEl] = useState(null);
+  const [currentEditableTextCont, setCurrentEditableTextCont] = useState(null); */
 
   useEffect(() => {
     // Get textInputRef
@@ -30,7 +29,7 @@ const AddCommentBtn = () => {
     }
   }, [textInputRef]);
 
-  const addCommentText = () => {
+  const addTextSvg = () => {
     // Context Menu Width and Height
     const contextMenuDim = {
       width: 70,
@@ -39,139 +38,148 @@ const AddCommentBtn = () => {
 
     const offset = 10; // context menu space from svg element
 
+    // console.log(svgFn);
+
     if (commentBox && commentBox.value !== "") {
-      let parentTextGroup;
-
-      if (typeof parentTextGroup === "undefined") {
-        parentTextGroup = "tests";
-      } else {
-        console.log(parentTextGroup);
-      }
-
-      /*       // Parent Text Group
-      //  const parentTextGroup = parentGroupEl;
-
-      if (editing !== true) {
-        console.log("editing nott true");
-
+      if (editing === false) {
+        console.log("editing false");
         // Initialize Unique IDs
         const textSvgId = nextId();
 
-        // Add SVG Group with unique ID to main SVG 'Canvas'
+        setSvgFn((current) => {
+          //const currentDup = current;
 
-        parentGroupEl.attr({
-          id: `svgText${textSvgId}`,
-          class: "causal-graph-component",
-        });
+          /*  if (current.node.instance.findOne(`#svgText${textSvgId}`) > 0) {
+            return;
+          } */
 
-        // Important Data Sets
-        parentGroupEl.data("editable", true);
-        parentGroupEl.data("comment", commentBox.value);
+          // current.node.instance.findOne(`#svgText${textSvgId}`).remove();
 
-        // Add Text to the created group
-        const addedText = parentGroupEl.text(commentBox.value).font({
-          fill: "#000",
-          anchor: "middle",
-        });
+          const parentTextGroup = current.group();
 
-        // Move it from the left edges
-        parentGroupEl.translate(200, 20);
+          // Add SVG Group with unique ID and some attributes to main SVG 'Canvas'
+          parentTextGroup.attr({
+            id: `svgText${textSvgId}`,
+            class: "causal-graph-component",
+          });
 
-        // Get width for the created group above
-        const parentTextGroupWidth = parentGroupEl.width();
-
-        // Dimensions to translate context menu
-        const contextMenuXPosition =
-          -contextMenuDim.width - parentTextGroupWidth / 2 - offset;
-
-        const contextMenuGroup = parentGroupEl.group();
-        contextMenuGroup.attr("class", "context-menu");
-        contextMenuGroup.translate(contextMenuXPosition, -20);
-
-        //Context Menu Elements Addition
-        contextMenuGroup
-          .rect(contextMenuDim.width, contextMenuDim.height)
-          .fill("#64748b");
-
-        contextMenuGroup
-          .text(function (add) {
-            add
-              .tspan("Edit Text")
-              .attr("class", "editText cursor-pointer")
-              .newLine();
-            add
-              .tspan("Delete")
-              .attr("class", "deleteItem cursor-pointer")
-              .newLine();
-          })
-          .font({
-            fill: "#fff",
-            size: 12,
-          })
-          .leading(1.8)
-          .dmove(8, 20);
-
-        // Hide Context Menu by Default
-        contextMenuGroup.hide();
-
-        parentGroupEl.draggable();
-
-        commentBox.value = "";
-
-        //setParentGroupEl(parentTextGroup);
-
-        // Events
-        parentGroupEl.dblclick(function () {
-          const commentText = this.data("comment");
-          const editable = this.data("editable");
-          const editTextCta = this.findOne(".editText");
-
-          // Show Context Menu
-          contextMenuGroup.show();
-
-          // Add Edit Text
-          if (editTextCta && editable) {
-            editTextCta.click(function () {
-              //Enable Editing
-              setEditing(true);
-
-              // Update Text Input Value
-              commentBox.value = commentText;
-
-              // Update Current Editable Text Container
-              setCurrentEditableTextCont(addedText);
+          // Add Text to the created group
+          const addedText = parentTextGroup
+            .text(commentBox.value)
+            .font({
+              fill: "#000",
+              anchor: "middle",
+            })
+            .attr({
+              class: "comment-text-svg",
             });
-          }
+
+          // Move it from the left edges
+          parentTextGroup.translate(200, 20);
+
+          // Get width for the created group above
+          const parentTextGroupWidth = parentTextGroup.width();
+
+          // Dimensions to translate context menu
+          const contextMenuXPosition =
+            -contextMenuDim.width - parentTextGroupWidth / 2 - offset;
+
+          const contextMenuGroup = parentTextGroup.group();
+          contextMenuGroup.attr("class", "context-menu");
+          contextMenuGroup.translate(contextMenuXPosition, -20);
+
+          //Context Menu Elements Addition
+          contextMenuGroup
+            .rect(contextMenuDim.width, contextMenuDim.height)
+            .fill("#64748b");
+
+          contextMenuGroup
+            .text(function (add) {
+              add
+                .tspan("Edit Text")
+                .attr("class", "editText cursor-pointer")
+                .newLine();
+              add
+                .tspan("Delete")
+                .attr("class", "deleteItem cursor-pointer")
+                .newLine();
+            })
+            .font({
+              fill: "#fff",
+              size: 12,
+            })
+            .leading(1.8)
+            .dmove(8, 20);
+
+          // Hide Context Menu by Default
+          contextMenuGroup.hide();
+
+          parentTextGroup.draggable();
+
+          commentBox.value = "";
+
+          // Events
+          parentTextGroup.dblclick(function () {
+            const editTextCta = this.findOne(".editText");
+
+            // Show Context Menu
+            contextMenuGroup.show();
+
+            // Add Edit Text
+            if (editTextCta) {
+              editTextCta.click(function () {
+                const parents = this.parents(".causal-graph-component");
+                const topMostParent = parents[parents.length - 1];
+
+                const commentTextSvg =
+                  topMostParent.findOne(".comment-text-svg");
+
+                const commentText = commentTextSvg.text();
+
+                //Enable Editing
+                setEditing(true);
+
+                // Update Text Input Value
+                commentBox.value = commentText;
+              });
+            }
+          });
+
+          return current;
         });
       } else {
-        // Set Editing back to false
-        setEditing(false);
-
-        console.log("editing  true");
         // Get Current Comment Box Value
         const currentCommentBoxVal = commentBox.value;
 
-        // Update Editable Text Container
-        currentEditableTextCont.text(currentCommentBoxVal);
+        setSvgFn((current) => {
+          const currentInstance = current.node.instance;
 
-        // Update Parent Group Container's data-comment
-        // parentGroupEl.data("comment", currentCommentBoxVal);
-        setParentGroupEl((current) =>
-          current.data("comment", currentCommentBoxVal)
-        );
+          const textNode = currentInstance.findOne(".comment-text-svg");
 
-        //   setSvgFn(parentGroupEl.root());
+          const contextMenu = currentInstance.findOne(".context-menu");
+
+          // Update Text
+          textNode.text(currentCommentBoxVal);
+
+          // Hide Context Menu
+          contextMenu.hide();
+
+          return current;
+        });
 
         // Empty out comment box
         commentBox.value = "";
-      } */
+
+        // Set Editing back to false
+        setEditing(false);
+      }
     }
   };
 
   return (
     <GeneralButton
       buttonText={editing ? "Edit Comment" : "Add Comment"}
-      onClick={addCommentText}
+      onClick={addTextSvg}
     />
   );
 };
