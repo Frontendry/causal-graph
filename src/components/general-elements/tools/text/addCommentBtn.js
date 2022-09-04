@@ -16,6 +16,7 @@ const AddCommentBtn = () => {
   // Component Level States
   const [commentBox, setCommentBox] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [currentTextUpdating, setCurrentTextUpdating] = useState(null);
   /*   const [parentGroupEl, setParentGroupEl] = useState(null);
   const [currentEditableTextCont, setCurrentEditableTextCont] = useState(null); */
 
@@ -133,6 +134,8 @@ const AddCommentBtn = () => {
               editTextCta.click(function () {
                 const parents = this.parents(".causal-graph-component");
                 const topMostParent = parents[parents.length - 1];
+                const topMostParentId = topMostParent.attr("id");
+                setCurrentTextUpdating(topMostParentId);
 
                 const commentTextSvg =
                   topMostParent.findOne(".comment-text-svg");
@@ -157,9 +160,13 @@ const AddCommentBtn = () => {
         setSvgFn((current) => {
           const currentInstance = current.node.instance;
 
-          const textNode = currentInstance.findOne(".comment-text-svg");
+          const currentElEdited = currentInstance.findOne(
+            `#${currentTextUpdating}`
+          );
 
-          const contextMenu = currentInstance.findOne(".context-menu");
+          const textNode = currentElEdited.findOne(".comment-text-svg");
+
+          const contextMenu = currentElEdited.findOne(".context-menu");
 
           // Update Text
           textNode.text(currentCommentBoxVal);
