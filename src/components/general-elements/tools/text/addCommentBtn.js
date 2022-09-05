@@ -40,8 +40,6 @@ const AddCommentBtn = () => {
     // console.log(svgFn);
 
     if (commentBox && commentBox.value !== "") {
-      console.log(editing);
-
       // Initialize Unique IDs
       const textSvgId = nextId();
 

@@ -84,6 +84,20 @@ const ContextMenu = (
         });
       }
     }
+
+    // Delete Elem
+    const deleteElemCta = this.findOne(".deleteItem");
+
+    deleteElemCta.click(function () {
+      const parents = this.parents(".causal-graph-component");
+      const topMostParent = parents[parents.length - 1];
+
+      // Remove Selected El
+      topMostParent.remove();
+
+      // Fixes bug after deleting
+      return this.node;
+    });
   });
 
   return;
