@@ -1,8 +1,11 @@
 // React ID Generator
 import nextId from "react-id-generator";
 
-// Context
+// Context Store
 import { useCanvasContext } from "../../../../context/canvasContextStore";
+
+// Context Menu
+import contextMenu from "../../../../utils/contextMenu";
 
 // Tool Icons Template
 import ToolIcon from "../toolIcon";
@@ -45,22 +48,11 @@ const DownArrow = () => {
 
       arrowGroup.draggable();
 
+      // Context Menu Creation
+      contextMenu(arrowGroup);
+
       return current;
     });
-    /*  const arrowGroup = svgFn.group();
-
-    const arrowBody = arrowGroup
-      .line(0, 50, 150, 50)
-      .move(20, 20)
-      .stroke({ color: "#f06", width: 3, linecap: "round" });
-
-    arrowBody.marker("end", 5, 3, function (add) {
-      add.polygon("0 0, 5 1.5, 0 3").fill("#f06");
-    });
-
-    arrowGroup.add(arrowBody);
-
-    arrowGroup.draggable(); */
   };
 
   return (
