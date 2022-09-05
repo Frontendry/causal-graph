@@ -23,7 +23,7 @@ const DownArrow = () => {
       });
 
       const arrowBody = arrowGroup
-        .line(0, 50, 150, 50)
+        .line(0, 0, 0, 150)
         .stroke({ color: "#f06", width: 3, linecap: "round" })
         .attr({
           class: "arrow-body-svg",
