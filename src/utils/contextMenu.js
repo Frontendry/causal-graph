@@ -67,9 +67,9 @@ const contextMenu = (
     // Show Context Menu
     contextMenuGroup.show();
 
-    if (editStatus === true) {
-      const editTextCta = this.findOne(".editText");
+    const editTextCta = this.findOne(".editText");
 
+    if (editStatus === true) {
       // Add Edit Text
       if (editTextCta) {
         editTextCta.click(function () {
@@ -99,6 +99,13 @@ const contextMenu = (
     };
 
     deleteElemCta.on("click", deleteAction);
+
+    // Document Click
+    document.addEventListener("click", function (e) {
+      if (e.target !== deleteElemCta || e.target !== editTextCta) {
+        contextMenuGroup.hide();
+      }
+    });
   });
 
   return;
