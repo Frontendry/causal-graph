@@ -10,7 +10,7 @@ import contextMenu from "../../../../utils/contextMenu";
 // Tool Icons Template
 import ToolIcon from "../toolIcon";
 
-const RightArrow = () => {
+const DownRightArrow = () => {
   const { setSvgFn } = useCanvasContext();
 
   const addEdge = () => {
@@ -22,12 +22,12 @@ const RightArrow = () => {
 
       // Add SVG Group with unique ID and some attributes to main SVG 'Canvas'
       arrowGroup.attr({
-        id: `svgArrow${textSvgId}`,
+        id: `svgDownRightArrow${textSvgId}`,
         class: "causal-graph-component",
       });
 
       const arrowBody = arrowGroup
-        .line(0, 10, 150, 10)
+        .line(0, 0, 150, 150)
         .stroke({ color: "#f06", width: 3, linecap: "round" })
         .attr({
           class: "arrow-body-svg",
@@ -37,7 +37,9 @@ const RightArrow = () => {
         add.polygon("0 0, 5 1.5, 0 3").fill("#f06");
       });
 
-      const groupList = current.node.instance.find(`#svgArrow${textSvgId}`);
+      const groupList = current.node.instance.find(
+        `#svgDownRightArrow${textSvgId}`
+      );
 
       // Resolve double group insertion bug
       if (groupList.length > 1) {
@@ -55,13 +57,14 @@ const RightArrow = () => {
       return current;
     });
   };
+
   return (
     <ToolIcon
-      title="Add Right Arrow"
-      iconClass="bi-arrow-right"
+      title="Add Down Right Arrow"
+      iconClass="bi-arrow-down-right"
       onClick={addEdge}
     />
   );
 };
 
-export default RightArrow;
+export default DownRightArrow;

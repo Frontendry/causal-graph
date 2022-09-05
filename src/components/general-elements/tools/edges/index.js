@@ -14,7 +14,8 @@ import ToolsSectionTitles from "../toolsSectionTitle";
 
 // Edge Shapes
 import DownArrow from "./downArrow";
-//import RightArrow from "./rightArrow";
+import DownLeftArrow from "./downLeftArrow";
+import DownRightArrow from "./downRightArrow";
 
 const EdgesContainer = () => {
   return (
@@ -23,7 +24,8 @@ const EdgesContainer = () => {
 
       <div className="grid grid-flow-col auto-cols-max gap-1">
         <DownArrow />
-        {/*  <RightArrow /> */}
+        <DownLeftArrow />
+        <DownRightArrow />
       </div>
     </div>
   );

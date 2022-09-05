@@ -10,7 +10,7 @@ import contextMenu from "../../../../utils/contextMenu";
 // Tool Icons Template
 import ToolIcon from "../toolIcon";
 
-const DownArrow = () => {
+const DownLeftArrow = () => {
   const { setSvgFn } = useCanvasContext();
 
   const addEdge = () => {
@@ -22,12 +22,12 @@ const DownArrow = () => {
 
       // Add SVG Group with unique ID and some attributes to main SVG 'Canvas'
       arrowGroup.attr({
-        id: `svgDownArrow${textSvgId}`,
+        id: `svgDownLeftArrow${textSvgId}`,
         class: "causal-graph-component",
       });
 
       const arrowBody = arrowGroup
-        .line(0, 0, 0, 150)
+        .line(150, 0, 0, 150)
         .stroke({ color: "#f06", width: 3, linecap: "round" })
         .attr({
           class: "arrow-body-svg",
@@ -37,7 +37,9 @@ const DownArrow = () => {
         add.polygon("0 0, 5 1.5, 0 3").fill("#f06");
       });
 
-      const groupList = current.node.instance.find(`#svgDownArrow${textSvgId}`);
+      const groupList = current.node.instance.find(
+        `#svgDownLeftArrow${textSvgId}`
+      );
 
       // Resolve double group insertion bug
       if (groupList.length > 1) {
@@ -58,11 +60,11 @@ const DownArrow = () => {
 
   return (
     <ToolIcon
-      title="Add Down Arrow"
-      iconClass="bi-arrow-down"
+      title="Add Down Left Arrow"
+      iconClass="bi-arrow-down-left"
       onClick={addEdge}
     />
   );
 };
 
-export default DownArrow;
+export default DownLeftArrow;
