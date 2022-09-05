@@ -70,7 +70,7 @@ const AddCommentBtn = () => {
           parentTextGroup.data("editable", true);
 
           // Add Text to the created group
-          const addedText = parentTextGroup
+          parentTextGroup
             .text(commentBox.value)
             .font({
               fill: "#000",
