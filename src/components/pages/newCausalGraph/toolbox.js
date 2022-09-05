@@ -9,6 +9,9 @@
 // React Modules
 import { useEffect } from "react";
 
+// Flatted
+import { parse } from "flatted";
+
 // SVG.js modules
 import { SVG } from "@svgdotjs/svg.js";
 import "@svgdotjs/svg.draggable.js";
@@ -21,18 +24,31 @@ import EdgesContainer from "../../general-elements/tools/edges";
 import CommentInputSection from "../../general-elements/tools/text";
 
 const ToolBox = () => {
-  const { canvasRef, setSvgFn } = useCanvasContext();
+  const { canvasRef, svgFn, setSvgFn } = useCanvasContext();
 
   useEffect(() => {
     const canvasEl = canvasRef.current;
 
-    // If canvasEl is not empty then....
-    if (canvasEl && !canvasEl.querySelector("svg")) {
-      // Initialize SVG.js
-      const draw = SVG().addTo(canvasRef.current).size("100%", "100%");
+    // If canvasEl exits
+    if (canvasEl) {
+      // If canvasEl has no SVG else use saved data
+      if (!canvasEl.querySelector("svg")) {
+        console.log("new project");
 
-      // Share draw variable on setSvgFn useCanvasContext's data value
-      setSvgFn(draw);
+        // Initialize SVG.js
+        const draw = SVG().addTo(canvasRef.current).size("100%", "100%");
+
+        // Share draw variable on setSvgFn useCanvasContext's data value
+        setSvgFn(draw);
+      } else {
+        console.log("saved project");
+
+        const localStorageVal = localStorage.getItem("causalGraph");
+
+        if (localStorageVal !== null) {
+          const svgItems = parse(localStorageVal);
+        }
+      }
     }
   }, [canvasRef, setSvgFn]);
 
