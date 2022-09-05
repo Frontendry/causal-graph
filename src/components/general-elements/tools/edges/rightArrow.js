@@ -10,7 +10,7 @@ import contextMenu from "../../../../utils/contextMenu";
 // Tool Icons Template
 import ToolIcon from "../toolIcon";
 
-const DownArrow = () => {
+const RightArrow = () => {
   const { setSvgFn } = useCanvasContext();
 
   const addEdge = () => {
@@ -27,7 +27,7 @@ const DownArrow = () => {
       });
 
       const arrowBody = arrowGroup
-        .line(0, 0, 0, 150)
+        .line(0, 10, 150, 10)
         .stroke({ color: "#f06", width: 3, linecap: "round" })
         .attr({
           class: "arrow-body-svg",
@@ -55,14 +55,13 @@ const DownArrow = () => {
       return current;
     });
   };
-
   return (
     <ToolIcon
-      title="Add Down Arrow"
-      iconClass="bi-arrow-down"
+      title="Add Right Arrow"
+      iconClass="bi-arrow-right"
       onClick={addEdge}
     />
   );
 };
 
-export default DownArrow;
+export default RightArrow;

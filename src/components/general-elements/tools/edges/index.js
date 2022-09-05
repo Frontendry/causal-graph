@@ -14,14 +14,16 @@ import ToolsSectionTitles from "../toolsSectionTitle";
 
 // Edge Shapes
 import DownArrow from "./downArrow";
+import RightArrow from "./rightArrow";
 
 const EdgesContainer = () => {
   return (
     <div>
       <ToolsSectionTitles titleText="Edges (Arrows)" />
 
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="grid grid-flow-col auto-cols-max gap-1">
         <DownArrow />
+        <RightArrow />
       </div>
     </div>
   );
