@@ -40,6 +40,9 @@ const Node = () => {
 
       nodeGroup.draggable();
 
+      // Context Menu Creation
+      contextMenu(nodeGroup);
+
       return current;
     });
   };
