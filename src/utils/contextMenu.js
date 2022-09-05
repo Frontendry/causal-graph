@@ -44,7 +44,13 @@ const contextMenu = (
   contextMenuGroup
     .text(function (add) {
       editBtnOption(add);
-      add.tspan("Delete").attr("class", "deleteItem cursor-pointer").newLine();
+      add
+        .tspan("Delete")
+        .attr("class", "deleteItem cursor-pointer")
+        .data({
+          deleteEl: groupEl.attr("id"),
+        })
+        .newLine();
     })
     .font({
       fill: "#fff",
@@ -88,16 +94,11 @@ const contextMenu = (
     // Delete Elem
     const deleteElemCta = this.findOne(".deleteItem");
 
-    deleteElemCta.click(function () {
-      const parents = this.parents(".causal-graph-component");
-      const topMostParent = parents[parents.length - 1];
+    const deleteAction = function () {
+      groupEl.remove();
+    };
 
-      // Remove Selected El
-      topMostParent.remove();
-
-      // Fixes bug after deleting
-      return this.node;
-    });
+    deleteElemCta.on("click", deleteAction);
   });
 
   return;
