@@ -7,18 +7,24 @@ import nextId from "react-id-generator";
 // Context Store
 import { useCanvasContext } from "../../../../context/canvasContextStore";
 
-// General Button Component
+// Components
 import GeneralButton from "../generalButton";
+import ContextMenu from "../../contextMenu";
 
 const AddCommentBtn = () => {
-  const { textInputRef, svgFn, setSvgFn } = useCanvasContext();
+  const {
+    textInputRef,
+    setSvgFn,
+    editing,
+    setEditing,
+    setCurrentTextUpdating,
+    currentTextUpdating,
+  } = useCanvasContext();
 
   // Component Level States
   const [commentBox, setCommentBox] = useState(null);
-  const [editing, setEditing] = useState(false);
-  const [currentTextUpdating, setCurrentTextUpdating] = useState(null);
-  /*   const [parentGroupEl, setParentGroupEl] = useState(null);
-  const [currentEditableTextCont, setCurrentEditableTextCont] = useState(null); */
+  /*   const [editing, setEditing] = useState(false);
+  const [currentTextUpdating, setCurrentTextUpdating] = useState(null); */
 
   useEffect(() => {
     // Get textInputRef
@@ -31,17 +37,11 @@ const AddCommentBtn = () => {
   }, [textInputRef]);
 
   const addTextSvg = () => {
-    // Context Menu Width and Height
-    const contextMenuDim = {
-      width: 70,
-      height: 80,
-    };
-
-    const offset = 10; // context menu space from svg element
-
     // console.log(svgFn);
 
     if (commentBox && commentBox.value !== "") {
+      console.log(editing);
+
       // Initialize Unique IDs
       const textSvgId = nextId();
 
@@ -61,11 +61,15 @@ const AddCommentBtn = () => {
 
           const groupList = current.node.instance.find(`#svgText${textSvgId}`);
 
+          // Resolve double group insertion bug
           if (groupList.length > 1) {
             const lastEl = groupList[groupList.length - 1];
             console.log(lastEl);
             lastEl.remove();
           }
+
+          // Adding Editing Option
+          parentTextGroup.data("editable", true);
 
           // Add Text to the created group
           const addedText = parentTextGroup
@@ -81,75 +85,19 @@ const AddCommentBtn = () => {
           // Move it from the left edges
           parentTextGroup.translate(200, 20);
 
-          // Get width for the created group above
-          const parentTextGroupWidth = parentTextGroup.width();
-
-          // Dimensions to translate context menu
-          const contextMenuXPosition =
-            -contextMenuDim.width - parentTextGroupWidth / 2 - offset;
-
-          const contextMenuGroup = parentTextGroup.group();
-          contextMenuGroup.attr("class", "context-menu");
-          contextMenuGroup.translate(contextMenuXPosition, -20);
-
-          //Context Menu Elements Addition
-          contextMenuGroup
-            .rect(contextMenuDim.width, contextMenuDim.height)
-            .fill("#64748b");
-
-          contextMenuGroup
-            .text(function (add) {
-              add
-                .tspan("Edit Text")
-                .attr("class", "editText cursor-pointer")
-                .newLine();
-              add
-                .tspan("Delete")
-                .attr("class", "deleteItem cursor-pointer")
-                .newLine();
-            })
-            .font({
-              fill: "#fff",
-              size: 12,
-            })
-            .leading(1.8)
-            .dmove(8, 20);
-
-          // Hide Context Menu by Default
-          contextMenuGroup.hide();
-
-          parentTextGroup.draggable();
-
+          // Empty Out Comment Box
           commentBox.value = "";
 
-          // Events
-          parentTextGroup.dblclick(function () {
-            const editTextCta = this.findOne(".editText");
+          // Draggable
+          parentTextGroup.draggable();
 
-            // Show Context Menu
-            contextMenuGroup.show();
-
-            // Add Edit Text
-            if (editTextCta) {
-              editTextCta.click(function () {
-                const parents = this.parents(".causal-graph-component");
-                const topMostParent = parents[parents.length - 1];
-                const topMostParentId = topMostParent.attr("id");
-                setCurrentTextUpdating(topMostParentId);
-
-                const commentTextSvg =
-                  topMostParent.findOne(".comment-text-svg");
-
-                const commentText = commentTextSvg.text();
-
-                //Enable Editing
-                setEditing(true);
-
-                // Update Text Input Value
-                commentBox.value = commentText;
-              });
-            }
-          });
+          // Context Menu Creation
+          ContextMenu(
+            parentTextGroup,
+            commentBox,
+            setCurrentTextUpdating,
+            setEditing
+          );
 
           return current;
         });

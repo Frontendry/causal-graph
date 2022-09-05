@@ -13,6 +13,8 @@ export const CanvasContextProvider = ({ children }) => {
   const canvasRef = useRef(null);
   const textInputRef = useRef(null);
   const [svgFn, setSvgFn] = useState(null);
+  const [editing, setEditing] = useState(false);
+  const [currentTextUpdating, setCurrentTextUpdating] = useState(null);
 
   // Shareable Data
   const contextVal = {
@@ -20,6 +22,10 @@ export const CanvasContextProvider = ({ children }) => {
     setSvgFn,
     canvasRef,
     textInputRef,
+    editing,
+    setEditing,
+    currentTextUpdating,
+    setCurrentTextUpdating,
   };
 
   return (
