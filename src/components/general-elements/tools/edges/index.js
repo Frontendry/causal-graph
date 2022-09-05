@@ -14,7 +14,7 @@ import ToolsSectionTitles from "../toolsSectionTitle";
 
 // Edge Shapes
 import DownArrow from "./downArrow";
-import RightArrow from "./rightArrow";
+//import RightArrow from "./rightArrow";
 
 const EdgesContainer = () => {
   return (

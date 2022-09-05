@@ -10,7 +10,7 @@
 import { useEffect } from "react";
 
 // Flatted
-import { parse } from "flatted";
+//import { parse } from "flatted";
 
 // SVG.js modules
 import { SVG } from "@svgdotjs/svg.js";
@@ -25,7 +25,7 @@ import CommentInputSection from "../../general-elements/tools/text";
 import NodesContainer from "../../general-elements/tools/nodes";
 
 const ToolBox = () => {
-  const { canvasRef, svgFn, setSvgFn } = useCanvasContext();
+  const { canvasRef, setSvgFn } = useCanvasContext();
 
   useEffect(() => {
     const canvasEl = canvasRef.current;
@@ -34,8 +34,6 @@ const ToolBox = () => {
     if (canvasEl) {
       // If canvasEl has no SVG else use saved data
       if (!canvasEl.querySelector("svg")) {
-        console.log("new project");
-
         // Initialize SVG.js
         const draw = SVG().addTo(canvasRef.current).size("100%", "100%");
 
@@ -47,7 +45,7 @@ const ToolBox = () => {
         const localStorageVal = localStorage.getItem("causalGraph");
 
         if (localStorageVal !== null) {
-          const svgItems = parse(localStorageVal);
+          //const svgItems = parse(localStorageVal);
         }
       }
     }
