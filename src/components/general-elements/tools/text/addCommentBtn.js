@@ -9,7 +9,9 @@ import { useCanvasContext } from "../../../../context/canvasContextStore";
 
 // Components
 import GeneralButton from "../generalButton";
-import ContextMenu from "../../contextMenu";
+
+// Context Menu Util
+import contextMenu from "../../../../utils/contextMenu";
 
 const AddCommentBtn = () => {
   const {
@@ -23,8 +25,6 @@ const AddCommentBtn = () => {
 
   // Component Level States
   const [commentBox, setCommentBox] = useState(null);
-  /*   const [editing, setEditing] = useState(false);
-  const [currentTextUpdating, setCurrentTextUpdating] = useState(null); */
 
   useEffect(() => {
     // Get textInputRef
@@ -90,7 +90,7 @@ const AddCommentBtn = () => {
           parentTextGroup.draggable();
 
           // Context Menu Creation
-          ContextMenu(
+          contextMenu(
             parentTextGroup,
             commentBox,
             setCurrentTextUpdating,

@@ -1,4 +1,4 @@
-const ContextMenu = (
+const contextMenu = (
   groupEl,
   commentBox,
   setCurrentTextUpdating,
@@ -103,4 +103,4 @@ const ContextMenu = (
   return;
 };
 
-export default ContextMenu;
+export default contextMenu;
