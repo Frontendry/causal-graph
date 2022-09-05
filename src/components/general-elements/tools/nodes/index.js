@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------------
- * Container to hold Edges/Arrows ToolBox Section
+ * Container to hold Nodes ToolBox Section
  *
  * @version 1.0
  * --------------------------------------------------------------------------
@@ -12,21 +12,19 @@ import React from "react";
 // ToolBox Section Title
 import ToolsSectionTitles from "../toolsSectionTitle";
 
-// Edge Shapes
-import DownArrow from "./downArrow";
-import RightArrow from "./rightArrow";
+// Node Shape
+import Node from "./node";
 
-const EdgesContainer = () => {
+const NodesContainer = () => {
   return (
     <div>
-      <ToolsSectionTitles titleText="Edges (Arrows)" />
+      <ToolsSectionTitles titleText="Nodes" />
 
       <div className="grid grid-flow-col auto-cols-max gap-1">
-        <DownArrow />
-        {/*  <RightArrow /> */}
+        <Node />
       </div>
     </div>
   );
 };
 
-export default EdgesContainer;
+export default NodesContainer;

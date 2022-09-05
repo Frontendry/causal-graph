@@ -22,6 +22,7 @@ import { useCanvasContext } from "../../../context/canvasContextStore";
 // ToolBox
 import EdgesContainer from "../../general-elements/tools/edges";
 import CommentInputSection from "../../general-elements/tools/text";
+import NodesContainer from "../../general-elements/tools/nodes";
 
 const ToolBox = () => {
   const { canvasRef, svgFn, setSvgFn } = useCanvasContext();
@@ -56,6 +57,7 @@ const ToolBox = () => {
     <section id="toolBox" className="w-1/5 border-r border-gray-200 p-4">
       <h2 className="text-sky-500 mb-8 font-bold">Causal Graph Tool Box</h2>
       <div className="grid grid-rows-1 gap-8">
+        <NodesContainer />
         <EdgesContainer />
         <CommentInputSection />
       </div>
