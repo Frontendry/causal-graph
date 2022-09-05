@@ -40,8 +40,6 @@ const ToolBox = () => {
         // Share draw variable on setSvgFn useCanvasContext's data value
         setSvgFn(draw);
       } else {
-        console.log("saved project");
-
         const localStorageVal = localStorage.getItem("causalGraph");
 
         if (localStorageVal !== null) {
