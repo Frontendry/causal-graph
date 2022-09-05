@@ -62,7 +62,6 @@ const AddCommentBtn = () => {
           // Resolve double group insertion bug
           if (groupList.length > 1) {
             const lastEl = groupList[groupList.length - 1];
-            console.log(lastEl);
             lastEl.remove();
           }
 
